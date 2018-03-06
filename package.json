@@ -1,0 +1,30 @@
+{
+  "name": "youtubetomp3",
+  "version": "0.1.0",
+  "description": "A small project for converting youtube to mp3",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saulflores95/youtubetomp3.git"
+  },
+  "author": "MrHorse",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/saulflores95/youtubetomp3/issues"
+  },
+  "homepage": "https://github.com/saulflores95/youtubetomp3#readme",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.14.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "next": "^5.0.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "ytdl-core": "^0.20.2"
+  }
+}
