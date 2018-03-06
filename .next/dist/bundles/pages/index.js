@@ -67,21 +67,46 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
-/******/ ({
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
 
-/***/ "./components/Conversion.js":
+module.exports = require("react");
+
+/***/ }),
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(6);
+
+
+/***/ }),
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("react");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__("axios");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
-var _jsxFileName = '/home/mrhorse/Desktop/github/youtubetomp3/components/Conversion.js';
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
+// EXTERNAL MODULE: external "react"
+var external__react_ = __webpack_require__(0);
+var external__react__default = /*#__PURE__*/__webpack_require__.n(external__react_);
+
+// EXTERNAL MODULE: external "next/link"
+var link_ = __webpack_require__(7);
+var link__default = /*#__PURE__*/__webpack_require__.n(link_);
+
+// EXTERNAL MODULE: external "axios"
+var external__axios_ = __webpack_require__(8);
+var external__axios__default = /*#__PURE__*/__webpack_require__.n(external__axios_);
+
+// CONCATENATED MODULE: ./components/Conversion.js
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -93,20 +118,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var Conversion = function (_Component) {
+var Conversion_Conversion = function (_Component) {
   _inherits(Conversion, _Component);
 
-  function Conversion() {
+  function Conversion(props) {
     _classCallCheck(this, Conversion);
 
-    return _possibleConstructorReturn(this, (Conversion.__proto__ || Object.getPrototypeOf(Conversion)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Conversion.__proto__ || Object.getPrototypeOf(Conversion)).call(this, props));
+
+    _this.state = { value: '' };
+
+    _this.handleChange = _this.handleChange.bind(_this);
+    return _this;
   }
 
   _createClass(Conversion, [{
+    key: 'handleChange',
+    value: function handleChange(event) {
+      this.setState({ value: event.target.value });
+    }
+  }, {
     key: 'converter',
     value: function converter() {
       console.log('youtue conversion starting...');
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/conversion/convert').then(function (res) {
+      external__axios__default.a.post('/conversion/convert', {
+        url: this.state.value
+      }).then(function (res) {
         console.log(res);
       }).catch(function (err) {
         console.log(err);
@@ -115,31 +152,18 @@ var Conversion = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      return external__react__default.a.createElement(
         'div',
-        {
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 14
-          }
-        },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        null,
+        external__react__default.a.createElement(
           'h1',
-          {
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 15
-            }
-          },
+          null,
           'youtube to mp3'
         ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        external__react__default.a.createElement('input', { type: 'text', value: this.state.value, onChange: this.handleChange }),
+        external__react__default.a.createElement(
           'button',
-          { onClick: this.converter.bind(this), __source: {
-              fileName: _jsxFileName,
-              lineNumber: 16
-            }
-          },
+          { onClick: this.converter.bind(this) },
           'Click to start'
         )
       );
@@ -147,75 +171,33 @@ var Conversion = function (_Component) {
   }]);
 
   return Conversion;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+}(external__react_["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (Conversion);
-
-/***/ }),
-
-/***/ "./pages/index.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("react");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_next_link__ = __webpack_require__("next/link");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_next_link___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_next_link__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Conversion__ = __webpack_require__("./components/Conversion.js");
-var _jsxFileName = '/home/mrhorse/Desktop/github/youtubetomp3/pages/index.js';
+/* harmony default export */ var components_Conversion = (Conversion_Conversion);
+// CONCATENATED MODULE: ./pages/index.js
 
 
 
 
-/* harmony default export */ __webpack_exports__["default"] = (function () {
-  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+/* harmony default export */ var pages = __webpack_exports__["default"] = (function () {
+  return external__react__default.a.createElement(
     'div',
-    {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 6
-      }
-    },
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Conversion__["a" /* default */], {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 7
-      }
-    })
+    null,
+    external__react__default.a.createElement(components_Conversion, null)
   );
 });
 
 /***/ }),
-
-/***/ 2:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__("./pages/index.js");
-
-
-/***/ }),
-
-/***/ "axios":
-/***/ (function(module, exports) {
-
-module.exports = require("axios");
-
-/***/ }),
-
-/***/ "next/link":
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = require("next/link");
 
 /***/ }),
-
-/***/ "react":
+/* 8 */
 /***/ (function(module, exports) {
 
-module.exports = require("react");
+module.exports = require("axios");
 
 /***/ })
-
-/******/ });
-//# sourceMappingURL=index.js.map
+/******/ ]);

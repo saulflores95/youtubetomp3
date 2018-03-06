@@ -6,11 +6,14 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 const routes = require('./server/routes')
+const bodyParser = require("body-parser");
+
 
 app.prepare()
 .then(() => {
   const server = express()
-
+  server.use(bodyParser.json())
+  server.use(bodyParser.urlencoded({extended: true}))
   server.use('/conversion/', routes, (err) => {
     if (err) throw err
   })

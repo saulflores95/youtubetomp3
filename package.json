@@ -16,13 +16,15 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production node server.js",
+    "digimon": "nodemon server.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "express": "^4.14.0",
     "fluent-ffmpeg": "^2.1.2",
     "next": "^5.0.0",
+    "nodemon": "^1.17.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "ytdl-core": "^0.20.2"
