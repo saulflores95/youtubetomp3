@@ -25,8 +25,10 @@
     "fluent-ffmpeg": "^2.1.2",
     "next": "^5.0.0",
     "nodemon": "^1.17.1",
+    "path": "^0.12.7",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-grid-system": "^3.1.2",
     "ytdl-core": "^0.20.2"
   }
 }

@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/share/yarn/bin/yarn.js build
+  /usr/local/bin/node /usr/share/yarn/bin/yarn.js start
 
 PATH: 
-  /home/mrhorse/bin:/home/mrhorse/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 
 Yarn version: 
   1.5.1
@@ -43,6 +43,7 @@ npm manifest:
       "nodemon": "^1.17.1",
       "react": "^16.2.0",
       "react-dom": "^16.2.0",
+      "react-grid-system": "^3.1.2",
       "ytdl-core": "^0.20.2"
     }
   }
@@ -3611,6 +3612,13 @@ Lockfile:
       object-assign "^4.1.1"
       prop-types "^15.6.0"
   
+  react-grid-system@^3.1.2:
+    version "3.1.2"
+    resolved "https://registry.yarnpkg.com/react-grid-system/-/react-grid-system-3.1.2.tgz#23c5e58b07e8ee0f7f42ef8c03c7b78c240a3458"
+    dependencies:
+      lodash "^4.17.4"
+      prop-types "^15.6.0"
+  
   react-hot-loader@4.0.0-beta.18:
     version "4.0.0-beta.18"
     resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.0.0-beta.18.tgz#5a3d1b5bd813633380b88c0c660019dbf638975d"
@@ -4778,7 +4786,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c next build
+  Arguments: -c NODE_ENV=production node server.js
   Directory: /home/mrhorse/Desktop/github/youtubetomp3
   Output:
   

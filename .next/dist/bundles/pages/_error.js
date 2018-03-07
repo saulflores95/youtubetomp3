@@ -67,24 +67,25 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 11:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(12);
-
-
-/***/ }),
-
-/***/ 12:
+/***/ "/home/mrhorse/Desktop/github/youtubetomp3/node_modules/next/dist/pages/_error.js":
 /***/ (function(module, exports) {
 
 module.exports = require("/home/mrhorse/Desktop/github/youtubetomp3/node_modules/next/dist/pages/_error.js");
 
+/***/ }),
+
+/***/ 0:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__("/home/mrhorse/Desktop/github/youtubetomp3/node_modules/next/dist/pages/_error.js");
+
+
 /***/ })
 
 /******/ });
+//# sourceMappingURL=_error.js.map
