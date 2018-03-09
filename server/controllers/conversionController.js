@@ -4,7 +4,7 @@ const ytdl = require('ytdl-core');
 const conversionController = {}
 
 function cleaner(title) {
-  let labels = {
+  let labels = [
     '(Official Video)',
     '[Official Video]',
     '[Official Music Video]',
@@ -12,7 +12,7 @@ function cleaner(title) {
     '[Audio]',
     '(Official Audio)',
     '(Lyrics)'
-  }
+  ]
   let WS = ' '
   for (const label of labels) {
     if(title.includes(label))
