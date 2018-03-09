@@ -19,7 +19,6 @@ export default class Conversion extends Component {
       url: this.state.value
     }).then((res) => {
       console.log(res)
-      let newWindow = window.open(res)
     }).catch((err) => {
       console.log(err)
     })
