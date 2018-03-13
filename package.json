@@ -17,18 +17,24 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
-    "digimon": "nodemon server.js"
+    "mon": "nodemon server.js",
+    "standard": "standard"
   },
   "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.0.13",
     "axios": "^0.18.0",
+    "cors": "^2.8.4",
     "express": "^4.14.0",
     "fluent-ffmpeg": "^2.1.2",
     "next": "^5.0.0",
-    "nodemon": "^1.17.1",
     "path": "^0.12.7",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-grid-system": "^3.1.2",
+    "standard": "^11.0.0",
     "ytdl-core": "^0.20.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.1"
   }
 }

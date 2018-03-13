@@ -1,38 +1,72 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import { Container, Col, Row } from 'react-grid-system'
+import React, { Component } from 'react' //import react and component var
+import axios from 'axios' //import axios for http request
+import { Container } from 'react-grid-system' //import contianer for grid system
 
 export default class Conversion extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {value: ''};
-    this.handleChange = this.handleChange.bind(this);
+  constructor (props) {
+    super(props)
+    this.state = {value: ''}  //value comes from url input field
+    this.handleChange = this.handleChange.bind(this)
   }
-
-  handleChange(event) {
-   this.setState({value: event.target.value});
+  //Set state for value if users types on input field
+  handleChange (event) {
+    this.setState({value: event.target.value})
   }
-
-  converter() {
+  //extracts filename from response headers
+  extractFilename(filename) {
+    let pattern = /filename[^;=\n]*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/i
+    var arr = pattern.exec(filename)
+    return arr[3]
+  }
+  //sends request to convert file on the clouse
+  converter () {
     console.log('youtue conversion starting...')
-    axios.post('/conversion/convert', {
-      url: this.state.value
+    axios.get('/conversion/convert', { // sends GET request to express server
+      params: {
+        url: this.state.value //sets url as response parametors
+      },
+      responseType: 'blob', //sets response file type
     }).then((res) => {
-      console.log(res)
+      const filename = this.extractFilename(res.headers['content-disposition']) //extract filename from response headers
+      const url = window.URL.createObjectURL(new Blob([res.data])) //creates tmp URL for blob data to enable download
+      const link = document.createElement('a') //generates fake link element in DOM
+      link.href = url //setting href source to tmpURL variable called url
+      link.setAttribute('download', filename) // setting url behavier when clicked
+      document.body.appendChild(link)
+      link.click() //simulating user click
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+  //sends request to store file on server and then downloads it on browser
+  converterLocal() {
+    console.log('youtue conversion starting...')
+    axios.get('/conversion/convert-local', {
+      params: {
+        url: this.state.value //sets url as response parametors
+      }
+    }).then((res) => {
+      let downloadUrl = `../static/${res.data}.mp3` //sets path of mp3
+      const link = document.createElement('a') //generates fake link element in DOM
+      link.href = downloadUrl //setting href source to tmpURL variable called downloadUrl
+      link.setAttribute('download', `${res.data}.mp3`) //setting href source to tmpURL variable called url
+      document.body.appendChild(link) // setting url behavier when clicked
+      link.click() //simulating user click
     }).catch((err) => {
       console.log(err)
     })
   }
 
-  render() {
+  render () {
     return (
       <div>
         <Container>
           <div className='conversion-container'>
             <h1 className='main-text'>What is the url?</h1>
-            <input placeholder="url" type="text" value={this.state.value} onChange={this.handleChange} />
-            <span className='input-highlight'></span>
-            <button onClick={this.converter.bind(this)} className="btn sixth">start</button>
+            <input placeholder='url' type='text' value={this.state.value} onChange={this.handleChange} />
+            <span className='input-highlight' />
+            <button onClick={this.converter.bind(this)} className='btn sixth'>start</button>
+            <button onClick={this.converterLocal.bind(this)} className='btn sixth'>local</button>
           </div>
         </Container>
         <style jsx>{`
