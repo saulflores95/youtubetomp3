@@ -6,9 +6,15 @@ import Head from 'next/head'
 export default () => (
   <div>
     <Head>
-      <title>CimeMP3</title>
-      <meta name="description" content="Best YT to mp3 converter">
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
+      <title>CimaP3</title>
+      <meta name='description' content='Best YT to mp3 converter' />
+      <meta name='viewport' content='initial-scale=1.0, width=device-width' key='viewport' />
+      <meta property='og:type' content='article' />
+      <meta property='og:title' content='CimaP3' />
+      <meta property='og:description' content='Best YT to mp3 converter' />
+      <meta property='og:image' content='./static/back.jpg' />
+      <meta property='og:image:width' content='640' />
+      <meta property='og:image:height' content='442' />
       <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' />
       <style>{`
         html {
