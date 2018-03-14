@@ -1,16 +1,33 @@
 import React, { Component } from 'react' //import react and component var
 import axios from 'axios' //import axios for http request
-import { Container } from 'react-grid-system' //import contianer for grid system
+import { Row, Col, Container, Hidden } from 'react-grid-system' //import contianer for grid system
+import swal from 'sweetalert2'
+import ReactGA from 'react-ga'
 
 export default class Conversion extends Component {
   constructor (props) {
     super(props)
-    this.state = {value: ''}  //value comes from url input field
+    this.state = {
+      value: '',
+      show: false
+    }  //value comes from url input field
     this.handleChange = this.handleChange.bind(this)
+    this.handleAlert = this.handleAlert.bind(this)
+  }
+
+  componentDidMount () {
+    ReactGA.initialize('UA-65601119-2')
+    ReactGA.pageview(document.location.pathname)
   }
   //Set state for value if users types on input field
   handleChange (event) {
     this.setState({value: event.target.value})
+  }
+
+  handleAlert() {
+    this.setState({
+      show: !this.state.show
+    })
   }
   //extracts filename from response headers
   extractFilename(filename) {
@@ -20,6 +37,14 @@ export default class Conversion extends Component {
   }
   //sends request to convert file on the clouse
   converter () {
+    swal({
+      title: 'Conversion in progress',
+      text: 'please wait...',
+      onOpen: () => {
+         swal.showLoading()
+       },
+       showConfirmButton: false
+    })
     console.log('youtue conversion starting...')
     axios.get('/conversion/convert', { // sends GET request to express server
       params: {
@@ -33,9 +58,20 @@ export default class Conversion extends Component {
       link.href = url //setting href source to tmpURL variable called url
       link.setAttribute('download', filename) // setting url behavier when clicked
       document.body.appendChild(link)
+      swal({
+        title: 'Conversion Finished',
+        type: 'success',
+        showConfirmButton: true
+      })
       link.click() //simulating user click
     }).catch((err) => {
       console.log(err)
+      swal({
+        title: 'ERROR',
+        text: 'It appears you did not copy the url correctly or title has uncompatiable characters ',
+        type: 'error',
+        showConfirmButton: true
+      })
     })
   }
   //sends request to store file on server and then downloads it on browser
@@ -62,12 +98,17 @@ export default class Conversion extends Component {
       <div>
         <Container>
           <div className='conversion-container'>
-            <h1 className='main-text'>What is the url?</h1>
-            <input placeholder='url' type='text' value={this.state.value} onChange={this.handleChange} />
+            <Hidden xs sm>
+              <h1 className='main-text'>What is the url?</h1>
+            </Hidden>
+            <input placeholder='paste youtube url' type='text' value={this.state.value} onChange={this.handleChange} />
             <span className='input-highlight' />
-            <button onClick={this.converter.bind(this)} className='btn sixth'>start</button>
-            <button onClick={this.converterLocal.bind(this)} className='btn sixth'>local</button>
-          </div>
+            <Row>
+              <Col sm={6} md={6}>
+                <button onClick={this.converter.bind(this)} className='btn sixth'>start</button>
+              </Col>
+            </Row>
+      </div>
         </Container>
         <style jsx>{`
           .conversion-container {
@@ -143,6 +184,10 @@ export default class Conversion extends Component {
             outline: none;
             border-bottom: 3px solid #333333;
             font-family: Roboto Slab, sans-serif;
+          }
+          input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+              color: white;
+              opacity: 1; /* Firefox */
           }
 
           input:focus + .input-highlight {

@@ -8,7 +8,7 @@ export default () => (
     <Head>
       <title>CimaP3</title>
       <meta name='description' content='Best YT to mp3 converter' />
-      <meta name='viewport' content='initial-scale=1.0, width=device-width' key='viewport' />
+      <meta name='viewport' content='initial-scale=1.0, width=device-width maximum-scale=1.0, user-scalable=no' />
       <meta property='og:type' content='article' />
       <meta property='og:title' content='CimaP3' />
       <meta property='og:description' content='Best YT to mp3 converter' />
