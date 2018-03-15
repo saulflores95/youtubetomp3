@@ -14,7 +14,7 @@ export default class Conversion extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleAlert = this.handleAlert.bind(this)
   }
-
+  //using componentDidMount to initialize google analitycs server
   componentDidMount () {
     ReactGA.initialize('UA-65601119-2')
     ReactGA.pageview(document.location.pathname)
@@ -23,7 +23,7 @@ export default class Conversion extends Component {
   handleChange (event) {
     this.setState({value: event.target.value})
   }
-
+  //Alternate states for models of succes or error
   handleAlert() {
     this.setState({
       show: !this.state.show
@@ -101,8 +101,10 @@ export default class Conversion extends Component {
             <Hidden xs sm>
               <h1 className='main-text'>What is the url?</h1>
             </Hidden>
-            <input placeholder='paste youtube url' type='text' value={this.state.value} onChange={this.handleChange} />
-            <span className='input-highlight' />
+            <div className="text-input">
+              <input onChange={this.handleChange} type="text" id="input1" placeholder="Try typing something in here!" />
+              <label htmlFor="input1">URL: </label>
+            </div>
             <Row>
               <Col sm={6} md={6}>
                 <button onClick={this.converter.bind(this)} className='btn sixth'>start</button>
@@ -123,77 +125,81 @@ export default class Conversion extends Component {
             right: 0;
             z-index: 2;
           }
-
           .main-text {
             font-size: 100px;
             font-family: 'Montserrat';
             color: white;
           }
-
-          .input-highlight {
-            font-size: 30px;
-            -webkit-user-select: none;
-               -moz-user-select: none;
-                -ms-user-select: none;
-                    user-select: none;
-            line-height: 70px;
-            border-top: 3px solid white;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            max-width: 100%;
-            height: 0;
-            color: transparent;
-            font-family: Roboto Slab, sans-serif;
-            overflow: hidden;
-          }
-
           .btn {
             box-sizing: border-box;
             appearance: none;
             background-color: transparent;
             border: 2px solid $red;
             border-radius: 0.6em;
-            color: $red;
+            color: white;
             cursor: pointer;
             display: flex;
             align-self: center;
             font-size: 1rem;
             font-weight: 400;
             line-height: 1;
-            margin: 20px;
+            margin-top: 20px;
             padding: 1.2em 2.8em;
             text-decoration: none;
             text-align: center;
             text-transform: uppercase;
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            }
-
-          input {
-            height: 60px;
+          }
+          .text-input {
+            position: relative;
+            margin-top: 50px;
+          }
+          .text-input input[type="text"] {
+            display: inline-block;
             width: 100%;
-            min-width: 100%;
-            padding: 0;
-            border-radius: 0;
-            line-height: 70px;
-            background-color: transparent;
-            color: white;
-            font-size: 30px;
-            border: none;
+            height: 40px;
+            -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
             outline: none;
-            border-bottom: 3px solid #333333;
-            font-family: Roboto Slab, sans-serif;
+            border: 1px solid lightgray;
+            border-radius: 3px;
+            padding: 10px 10px 10px 100px;
+            -webkit-transition: all 0.1s ease-out;
+            transition: all 0.1s ease-out;
           }
-          input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-              color: white;
-              opacity: 1; /* Firefox */
+          .text-input input[type="text"] + label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            height: 40px;
+            line-height: 40px;
+            color: white;
+            border-radius: 3px 0 0 3px;
+            padding: 0 20px;
+            background: black;
+            -webkit-transform: translateZ(0) translateX(0);
+                    transform: translateZ(0) translateX(0);
+            -webkit-transition: all 0.3s ease-in;
+            transition: all 0.3s ease-in;
+            -webkit-transition-delay: 0.2s;
+                    transition-delay: 0.2s;
           }
-
-          input:focus + .input-highlight {
-            border-top: 3px solid #fbc91b;
+          .text-input input[type="text"]:focus + label {
+            -webkit-transform: translateY(-120%) translateX(0%);
+                    transform: translateY(-120%) translateX(0%);
+            border-radius: 3px;
+            -webkit-transition: all 0.1s ease-out;
+            transition: all 0.1s ease-out;
           }
-
+          .text-input input[type="text"]:focus {
+            padding: 10px;
+            -webkit-transition: all 0.3s ease-out;
+            transition: all 0.3s ease-out;
+            -webkit-transition-delay: 0.2s;
+                    transition-delay: 0.2s;
+          }
         `}</style>
       </div>
     )
