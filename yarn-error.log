@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/share/yarn/bin/yarn.js biuld
+  /usr/local/bin/node /usr/share/yarn/bin/yarn.js ev
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
@@ -2753,8 +2753,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.1.0.tgz#7ed1b1410c6a0e0f78cf95d3b8440c63f78b8614"
   
   invariant@^2.2.2:
-    version "2.2.3"
-    resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.3.tgz#1a827dfde7dcbd7c323f0ca826be8fa7c5e9d688"
+    version "2.2.4"
+    resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
     dependencies:
       loose-envify "^1.0.0"
   
@@ -3566,8 +3566,8 @@ Lockfile:
       tar-pack "^3.4.0"
   
   nodemon@^1.17.1:
-    version "1.17.1"
-    resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.17.1.tgz#cdb4bc53d7a86d6162143a1a44d7adf927d8652f"
+    version "1.17.2"
+    resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.17.2.tgz#17c0062629610e03dd01241c576f1c4068da9fdd"
     dependencies:
       chokidar "^2.0.2"
       debug "^3.1.0"
@@ -5424,7 +5424,7 @@ Lockfile:
       sax "^1.1.3"
 
 Trace: 
-  Error: Command "biuld" not found.
+  Error: Command "ev" not found. Did you mean "dev"?
       at new MessageError (/usr/share/yarn/lib/cli.js:186:110)
       at /usr/share/yarn/lib/cli.js:87307:17
       at Generator.next (<anonymous>)

@@ -32,8 +32,7 @@ conversionController.get =  (req, res) => {
     if (err) throw err;
     let title = info.title = cleaner(info.title) // get cleaned song title
     let stream = ytdl(url, { //start video stream
-      quality: 'highestaudio',
-      filter: 'audioonly'
+      quality: 'highestaudio'
     })
     //set response headers
     res.set('Acces-Control-Origin', '*')
@@ -41,6 +40,12 @@ conversionController.get =  (req, res) => {
     res.set('Content-Type', 'application/audio/mpeg3')
     let start = Date.now() //define when conversion starts to detect how long conversion lasts
     ffmpeg(stream)  //set ffmpeg source to ytdl stream
+     .outputOptions([
+       '-vn',
+       '-ar 44100',
+       '-ac 2',
+       '-ab 192k',
+       '-f mp3'])
      .audioCodec('libmp3lame')  //use libmp3lame to convert to mp3
      .audioBitrate(128)
      .format('mp3')//specify format
