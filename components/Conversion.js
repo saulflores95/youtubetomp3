@@ -128,6 +128,21 @@ export default class Conversion extends Component {
   }
 
   render () {
+    const styles = {
+      button: {
+        marginTop: 12,
+      },
+      exampleImageInput: {
+        cursor: 'pointer',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        right: 0,
+        left: 0,
+        width: '100%',
+        opacity: 0,
+      },
+    }
     return (
       <div>
         <Container>
@@ -135,9 +150,14 @@ export default class Conversion extends Component {
             <Hidden xs sm>
               <h1 className='main-text'>What is the url?</h1>
             </Hidden>
-            <div className="text-input">
-              <input onChange={this.handleChange} type="text" id="input1" placeholder="Try typing something in here!" />
-              <label htmlFor="input1">URL: </label>
+            <Row>
+              <Col md={10} lg={10}>
+                <div className="text-input">
+                  <input onChange={this.handleChange} type="text" id="input1" placeholder="Try typing something in here!" />
+                  <label htmlFor="input1">URL: </label>
+                </div>
+              </Col>
+              <Col md={2} lg={2}>
               <MuiThemeProvider>
                 <div>
                   <RaisedButton
@@ -158,10 +178,19 @@ export default class Conversion extends Component {
                   </Popover>
                 </div>
               </MuiThemeProvider>
-            </div>
+              </Col>
+            </Row>
             <Row>
               <Col sm={6} md={6}>
-                <button onClick={this.converter.bind(this)} className='btn sixth'>start</button>
+                <MuiThemeProvider>
+                  <RaisedButton
+                    label='Start'
+                    labelPosition='before'
+                    style={styles.button}
+                    containerElement='label'
+                    onClick={this.converter.bind(this)}
+                  />
+                  </MuiThemeProvider>
               </Col>
             </Row>
           </div>
@@ -207,11 +236,10 @@ export default class Conversion extends Component {
           }
           .text-input {
             position: relative;
-            margin-top: 50px;
           }
           .text-input input[type="text"] {
             display: inline-block;
-            width: 80%;
+            width: 100%;
             height: 40px;
             -webkit-box-sizing: border-box;
                     box-sizing: border-box;
