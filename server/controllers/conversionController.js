@@ -60,6 +60,32 @@ conversionController.get =  (req, res) => {
     })
   })
 }
+//Get request that downlaods selected stream
+conversionController.getVideo = (req, res) => {
+  console.log('Conversion starting in server...')
+  const url = req.query.url //recieve youtube url from req params
+  ytdl.getInfo(url, (err, info) => {
+    if (err) throw err;
+    let title = info.title = cleaner(info.title) // get cleaned song title
+    //set response headers
+    res.set('Acces-Control-Origin', '*')
+    res.set('Content-disposition', 'attachment; filename=' + title + '.mp4')
+    res.set('Content-Type', 'video/mp4')
+    let start = Date.now() //define when conversion starts to detect how long conversion lasts
+    let stream = ytdl(url, { //start video stream
+      quality: 'highestaudio'
+    })
+    .on('error', (err) => console.error(err))
+    .on('progress', (p) => {
+      readline.cursorTo(process.stdout, 0) //preview downloaded kb on server console
+      process.stdout.write(`${p.targetSize}kb downloaded`)
+    })
+    .on('end', () =>  console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`)) // Print how long conversion took
+    .pipe(res, { //pipe converson data to response and end response
+      end: true
+    })
+  })
+}
 //Get request that converts and stores on server, and then sends it to browser
 conversionController.local =  (req, res) => {
   console.log('Conversion starting in server...')

@@ -3,19 +3,31 @@ import axios from 'axios' //import axios for http request
 import { Row, Col, Container, Hidden } from 'react-grid-system' //import contianer for grid system
 import swal from 'sweetalert2'
 import ReactGA from 'react-ga'
+import RaisedButton from 'material-ui/RaisedButton'
+import Popover from 'material-ui/Popover'
+import Menu from 'material-ui/Menu'
+import MenuItem from 'material-ui/MenuItem'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import Paper from 'material-ui/Paper';
 
 export default class Conversion extends Component {
   constructor (props) {
     super(props)
     this.state = {
       value: '',
-      show: false
+      openMenu: false,
+      show: false,
+      currentFormat: 'audio'
     }  //value comes from url input field
     this.handleChange = this.handleChange.bind(this)
     this.handleAlert = this.handleAlert.bind(this)
+    this.handleClick = this.handleClick.bind(this)
+    this.handleRequestClose = this.handleRequestClose.bind(this)
   }
   //using componentDidMount to initialize google analitycs server
   componentDidMount () {
+    injectTapEventPlugin()
     ReactGA.initialize('UA-65601119-2')
     ReactGA.pageview(document.location.pathname)
   }
@@ -29,11 +41,33 @@ export default class Conversion extends Component {
       show: !this.state.show
     })
   }
+
+  handleClick (event) {
+    // This prevents ghost click.
+    event.preventDefault()
+    this.setState({
+      openMenu: true,
+      anchorEl: event.currentTarget,
+    })
+  }
+
+  handleRequestClose() {
+    this.setState({
+      openMenu: false,
+    })
+  }
   //extracts filename from response headers
   extractFilename(filename) {
     let pattern = /filename[^;=\n]*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/i
     var arr = pattern.exec(filename)
     return arr[3]
+  }
+
+  menuClicked(event, value) {
+    this.setState({
+      currentFormat: value
+    })
+    console.log(this.state.currentFormat)
   }
   //sends request to convert file on the clouse
   converter () {
@@ -46,7 +80,7 @@ export default class Conversion extends Component {
        showConfirmButton: false
     })
     console.log('youtue conversion starting...')
-    axios.get('/conversion/convert', { // sends GET request to express server
+    axios.get(`/conversion/${this.state.currentFormat}-convert`, { // sends GET request to express server
       params: {
         url: this.state.value //sets url as response parametors
       },
@@ -104,13 +138,33 @@ export default class Conversion extends Component {
             <div className="text-input">
               <input onChange={this.handleChange} type="text" id="input1" placeholder="Try typing something in here!" />
               <label htmlFor="input1">URL: </label>
+              <MuiThemeProvider>
+                <div>
+                  <RaisedButton
+                    onClick={this.handleClick}
+                    label={this.state.currentFormat}
+                  />
+                  <Popover
+                    open={this.state.openMenu}
+                    anchorEl={this.state.anchorEl}
+                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                    onRequestClose={this.handleRequestClose}
+                  >
+                    <Menu onChange={this.menuClicked.bind(this)}>
+                      <MenuItem value='audio' primaryText='Audio' />
+                      <MenuItem value='video' primaryText='Video' />
+                    </Menu>
+                  </Popover>
+                </div>
+              </MuiThemeProvider>
             </div>
             <Row>
               <Col sm={6} md={6}>
                 <button onClick={this.converter.bind(this)} className='btn sixth'>start</button>
               </Col>
             </Row>
-      </div>
+          </div>
         </Container>
         <style jsx>{`
           .conversion-container {
@@ -157,7 +211,7 @@ export default class Conversion extends Component {
           }
           .text-input input[type="text"] {
             display: inline-block;
-            width: 100%;
+            width: 80%;
             height: 40px;
             -webkit-box-sizing: border-box;
                     box-sizing: border-box;
