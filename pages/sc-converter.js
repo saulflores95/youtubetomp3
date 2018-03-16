@@ -1,13 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
 import App from '../components/wrapper'
-import Conversion from '../components/Conversion'
+import SConversion from '../components/soundcloud'
 
 export default () => (
   <div>
     <div>
       <App>
-        <Conversion />
+        <SConversion />
       </App>
     </div>
   </div>

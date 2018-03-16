@@ -10,19 +10,15 @@ import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
-export default class Conversion extends Component {
+export default class SConversion extends Component {
   constructor (props) {
     super(props)
     this.state = {
       value: '',
-      openMenu: false,
       show: false,
-      currentFormat: 'audio'
     }  //value comes from url input field
     this.handleChange = this.handleChange.bind(this)
     this.handleAlert = this.handleAlert.bind(this)
-    this.handleClick = this.handleClick.bind(this)
-    this.handleRequestClose = this.handleRequestClose.bind(this)
   }
   //Set state for value if users types on input field
   handleChange (event) {
@@ -34,33 +30,11 @@ export default class Conversion extends Component {
       show: !this.state.show
     })
   }
-  //audio video menu selector handler
-  handleClick (event) {
-    // This prevents ghost click.
-    event.preventDefault()
-    this.setState({
-      openMenu: true,
-      anchorEl: event.currentTarget,
-    })
-  }
-  //closes vide menu selector handler
-  handleRequestClose() {
-    this.setState({
-      openMenu: false,
-    })
-  }
   //extracts filename from response headers
   extractFilename(filename) {
     let pattern = /filename[^;=\n]*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/i
     var arr = pattern.exec(filename)
     return arr[3]
-  }
-  //hanldes audio video menu selection
-  menuClicked(event, value) {
-    this.setState({
-      currentFormat: value,
-      openMenu: false
-    })
   }
   //sends request to convert file on the clouse
   converter () {
@@ -101,24 +75,6 @@ export default class Conversion extends Component {
       })
     })
   }
-  //sends request to store file on server and then downloads it on browser
-  converterLocal() {
-    console.log('youtue conversion starting...')
-    axios.get('/conversion/convert-local', {
-      params: {
-        url: this.state.value //sets url as response parametors
-      }
-    }).then((res) => {
-      let downloadUrl = `../static/${res.data}.mp3` //sets path of mp3
-      const link = document.createElement('a') //generates fake link element in DOM
-      link.href = downloadUrl //setting href source to tmpURL variable called downloadUrl
-      link.setAttribute('download', `${res.data}.mp3`) //setting href source to tmpURL variable called url
-      document.body.appendChild(link) // setting url behavier when clicked
-      link.click() //simulating user click
-    }).catch((err) => {
-      console.log(err)
-    })
-  }
 
   render () {
     const styles = {
@@ -134,33 +90,11 @@ export default class Conversion extends Component {
               <h1 className='main-text'>What is the url?</h1>
             </Hidden>
             <Row>
-              <Col md={10} lg={10}>
+              <Col md={10} lg={12}>
                 <div className="text-input">
                   <input onChange={this.handleChange} type="text" id="input1" placeholder="Try typing something in here!" />
                   <label htmlFor="input1">URL: </label>
                 </div>
-              </Col>
-              <Col md={2} lg={2}>
-              <MuiThemeProvider>
-                <div>
-                  <RaisedButton
-                    onClick={this.handleClick}
-                    label={this.state.currentFormat}
-                  />
-                  <Popover
-                    open={this.state.openMenu}
-                    anchorEl={this.state.anchorEl}
-                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                    onRequestClose={this.handleRequestClose}
-                  >
-                    <Menu onChange={this.menuClicked.bind(this)}>
-                      <MenuItem value='audio' primaryText='Audio' />
-                      <MenuItem value='video' primaryText='Video' />
-                    </Menu>
-                  </Popover>
-                </div>
-              </MuiThemeProvider>
               </Col>
             </Row>
             <Row>
