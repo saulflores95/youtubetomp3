@@ -1,13 +1,8 @@
-import React, { Component } from 'react' //import react and component var
-import axios from 'axios' //import axios for http request
-import { Row, Col, Container, Hidden } from 'react-grid-system' //import contianer for grid system
+import React, { Component } from 'react' // import react and component var
+import axios from 'axios' // import axios for http request
+import { Row, Col, Container, Hidden } from 'react-grid-system' // import contianer for grid system
 import swal from 'sweetalert2'
-import ReactGA from 'react-ga'
-import RaisedButton from 'material-ui/RaisedButton'
-import FlatButton from 'material-ui/FlatButton';
-import Popover from 'material-ui/Popover'
-import Menu from 'material-ui/Menu'
-import MenuItem from 'material-ui/MenuItem'
+import FlatButton from 'material-ui/FlatButton'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 export default class SConversion extends Component {
@@ -15,48 +10,48 @@ export default class SConversion extends Component {
     super(props)
     this.state = {
       value: '',
-      show: false,
-    }  //value comes from url input field
+      show: false
+    } // value comes from url input field
     this.handleChange = this.handleChange.bind(this)
     this.handleAlert = this.handleAlert.bind(this)
   }
-  //Set state for value if users types on input field
+  // Set state for value if users types on input field
   handleChange (event) {
     this.setState({value: event.target.value})
   }
-  //Alternate states for models of succes or error
-  handleAlert() {
+  // Alternate states for models of succes or error
+  handleAlert () {
     this.setState({
       show: !this.state.show
     })
   }
-  //extracts filename from response headers
-  extractFilename(filename) {
+  // extracts filename from response headers
+  extractFilename (filename) {
     let pattern = /filename[^;=\n]*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/i
     var arr = pattern.exec(filename)
     return arr[3]
   }
-  //sends request to convert file on the clouse
+  // sends request to convert file on the clouse
   converter () {
     swal({
       title: 'Conversion in progress',
       text: 'please wait...',
       onOpen: () => {
-         swal.showLoading()
-       },
-       showConfirmButton: false
+        swal.showLoading()
+      },
+      showConfirmButton: false
     })
     console.log('youtue conversion starting...')
     axios.get(`/conversion/${this.state.currentFormat}-convert`, { // sends GET request to express server
       params: {
-        url: this.state.value //sets url as response parametors
+        url: this.state.value // sets url as response parametors
       },
-      responseType: 'blob', //sets response file type
+      responseType: 'blob' // sets response file type
     }).then((res) => {
-      const filename = this.extractFilename(res.headers['content-disposition']) //extract filename from response headers
-      const url = window.URL.createObjectURL(new Blob([res.data])) //creates tmp URL for blob data to enable download
-      const link = document.createElement('a') //generates fake link element in DOM
-      link.href = url //setting href source to tmpURL variable called url
+      const filename = this.extractFilename(res.headers['content-disposition']) // extract filename from response headers
+      const url = window.URL.createObjectURL(new Blob([res.data])) // creates tmp URL for blob data to enable download
+      const link = document.createElement('a') // generates fake link element in DOM
+      link.href = url // setting href source to tmpURL variable called url
       link.setAttribute('download', filename) // setting url behavier when clicked
       document.body.appendChild(link)
       swal({
@@ -64,7 +59,7 @@ export default class SConversion extends Component {
         type: 'success',
         showConfirmButton: true
       })
-      link.click() //simulating user click
+      link.click() // simulating user click
     }).catch((err) => {
       console.log(err)
       swal({
@@ -79,7 +74,7 @@ export default class SConversion extends Component {
   render () {
     const styles = {
       button: {
-        marginTop: 12,
+        marginTop: 12
       }
     }
     return (
@@ -91,9 +86,9 @@ export default class SConversion extends Component {
             </Hidden>
             <Row>
               <Col md={10} lg={12}>
-                <div className="text-input">
-                  <input onChange={this.handleChange} type="text" id="input1" placeholder="Try typing something in here!" />
-                  <label htmlFor="input1">URL: </label>
+                <div className='text-input'>
+                  <input onChange={this.handleChange} type='text' id='input1' placeholder='Try typing something in here!' />
+                  <label htmlFor='input1'>URL: </label>
                 </div>
               </Col>
             </Row>
@@ -101,12 +96,12 @@ export default class SConversion extends Component {
               <Col sm={6} md={6}>
                 <MuiThemeProvider>
                   <FlatButton
-                    label="Start"
+                    label='Start'
                     onClick={this.converter.bind(this)}
                     style={styles.button}
-                    backgroundColor="white"
+                    backgroundColor='white'
                   />
-                  </MuiThemeProvider>
+                </MuiThemeProvider>
               </Col>
             </Row>
           </div>

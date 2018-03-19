@@ -6,7 +6,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 export default class App extends Component {
   componentDidMount () {
     injectTapEventPlugin()
-    ReactGA.initialize('UA-102871628-1')
+    ReactGA.initialize('UA-65601119-2')
     ReactGA.pageview(document.location.pathname)
   }
   render () {

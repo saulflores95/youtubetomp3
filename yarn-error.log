@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/share/yarn/bin/yarn.js standard
+  /usr/local/bin/node /usr/share/yarn/bin/yarn.js standard --fix
 
 PATH: 
-  /home/mrhorse/bin:/home/mrhorse/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 
 Yarn version: 
   1.5.1
@@ -5538,7 +5538,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c standard
+  Arguments: -c standard --fix
   Directory: /home/mrhorse/Desktop/github/youtubetomp3
   Output:
   

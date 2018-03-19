@@ -1,10 +1,9 @@
-import React, { Component } from 'react' //import react and component var
-import axios from 'axios' //import axios for http request
-import { Row, Col, Container, Hidden } from 'react-grid-system' //import contianer for grid system
+import React, { Component } from 'react' // import react and component var
+import axios from 'axios' // import axios for http request
+import { Row, Col, Container, Hidden } from 'react-grid-system' // import contianer for grid system
 import swal from 'sweetalert2'
-import ReactGA from 'react-ga'
 import RaisedButton from 'material-ui/RaisedButton'
-import FlatButton from 'material-ui/FlatButton';
+import FlatButton from 'material-ui/FlatButton'
 import Popover from 'material-ui/Popover'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
@@ -18,71 +17,71 @@ export default class Conversion extends Component {
       openMenu: false,
       show: false,
       currentFormat: 'audio'
-    }  //value comes from url input field
+    } // value comes from url input field
     this.handleChange = this.handleChange.bind(this)
     this.handleAlert = this.handleAlert.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleRequestClose = this.handleRequestClose.bind(this)
   }
-  //Set state for value if users types on input field
+  // Set state for value if users types on input field
   handleChange (event) {
     this.setState({value: event.target.value})
   }
-  //Alternate states for models of succes or error
-  handleAlert() {
+  // Alternate states for models of succes or error
+  handleAlert () {
     this.setState({
       show: !this.state.show
     })
   }
-  //audio video menu selector handler
+  // audio video menu selector handler
   handleClick (event) {
     // This prevents ghost click.
     event.preventDefault()
     this.setState({
       openMenu: true,
-      anchorEl: event.currentTarget,
+      anchorEl: event.currentTarget
     })
   }
-  //closes vide menu selector handler
-  handleRequestClose() {
+  // closes vide menu selector handler
+  handleRequestClose () {
     this.setState({
-      openMenu: false,
+      openMenu: false
     })
   }
-  //extracts filename from response headers
-  extractFilename(filename) {
+  // extracts filename from response headers
+  extractFilename (filename) {
     let pattern = /filename[^;=\n]*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/i
     var arr = pattern.exec(filename)
     return arr[3]
   }
-  //hanldes audio video menu selection
-  menuClicked(event, value) {
+  // hanldes audio video menu selection
+  menuClicked (event, value) {
     this.setState({
       currentFormat: value,
       openMenu: false
     })
   }
-  //sends request to convert file on the clouse
+  // sends request to convert file on the clouse
   converter () {
     swal({
       title: 'Conversion in progress',
       text: 'please wait...',
       onOpen: () => {
-         swal.showLoading()
-       },
-       showConfirmButton: false
+        swal.showLoading()
+      },
+      showConfirmButton: false
     })
     console.log('youtue conversion starting...')
     axios.get(`/conversion/${this.state.currentFormat}-convert`, { // sends GET request to express server
       params: {
-        url: this.state.value //sets url as response parametors
+        url: this.state.value // sets url as response parametors
       },
-      responseType: 'blob', //sets response file type
+      responseType: 'blob' // sets response file type
     }).then((res) => {
-      const filename = this.extractFilename(res.headers['content-disposition']) //extract filename from response headers
-      const url = window.URL.createObjectURL(new Blob([res.data])) //creates tmp URL for blob data to enable download
-      const link = document.createElement('a') //generates fake link element in DOM
-      link.href = url //setting href source to tmpURL variable called url
+      const filename = this.extractFilename(res.headers['content-disposition']) // extract filename from response headers
+      const url = window.URL.createObjectURL(new Blob([res.data])) // creates tmp URL for blob data to enable download
+      const link = document.createElement('a') // generates fake link element in DOM
+      link.href = url // setting href source to tmpURL variable called url
       link.setAttribute('download', filename) // setting url behavier when clicked
       document.body.appendChild(link)
       swal({
@@ -90,7 +89,7 @@ export default class Conversion extends Component {
         type: 'success',
         showConfirmButton: true
       })
-      link.click() //simulating user click
+      link.click() // simulating user click
     }).catch((err) => {
       console.log(err)
       swal({
@@ -101,20 +100,20 @@ export default class Conversion extends Component {
       })
     })
   }
-  //sends request to store file on server and then downloads it on browser
-  converterLocal() {
+  // sends request to store file on server and then downloads it on browser
+  converterLocal () {
     console.log('youtue conversion starting...')
     axios.get('/conversion/convert-local', {
       params: {
-        url: this.state.value //sets url as response parametors
+        url: this.state.value // sets url as response parametors
       }
     }).then((res) => {
-      let downloadUrl = `../static/${res.data}.mp3` //sets path of mp3
-      const link = document.createElement('a') //generates fake link element in DOM
-      link.href = downloadUrl //setting href source to tmpURL variable called downloadUrl
-      link.setAttribute('download', `${res.data}.mp3`) //setting href source to tmpURL variable called url
+      let downloadUrl = `../static/${res.data}.mp3` // sets path of mp3
+      const link = document.createElement('a') // generates fake link element in DOM
+      link.href = downloadUrl // setting href source to tmpURL variable called downloadUrl
+      link.setAttribute('download', `${res.data}.mp3`) // setting href source to tmpURL variable called url
       document.body.appendChild(link) // setting url behavier when clicked
-      link.click() //simulating user click
+      link.click() // simulating user click
     }).catch((err) => {
       console.log(err)
     })
@@ -123,7 +122,7 @@ export default class Conversion extends Component {
   render () {
     const styles = {
       button: {
-        marginTop: 12,
+        marginTop: 12
       }
     }
     return (
@@ -135,44 +134,44 @@ export default class Conversion extends Component {
             </Hidden>
             <Row>
               <Col md={10} lg={10}>
-                <div className="text-input">
-                  <input onChange={this.handleChange} type="text" id="input1" placeholder="Try typing something in here!" />
-                  <label htmlFor="input1">URL: </label>
+                <div className='text-input'>
+                  <input onChange={this.handleChange} type='text' id='input1' placeholder='Try typing something in here!' />
+                  <label htmlFor='input1'>URL: </label>
                 </div>
               </Col>
               <Col md={2} lg={2}>
-              <MuiThemeProvider>
-                <div>
-                  <RaisedButton
-                    onClick={this.handleClick}
-                    label={this.state.currentFormat}
-                  />
-                  <Popover
-                    open={this.state.openMenu}
-                    anchorEl={this.state.anchorEl}
-                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                    onRequestClose={this.handleRequestClose}
-                  >
-                    <Menu onChange={this.menuClicked.bind(this)}>
-                      <MenuItem value='audio' primaryText='Audio' />
-                      <MenuItem value='video' primaryText='Video' />
-                    </Menu>
-                  </Popover>
-                </div>
-              </MuiThemeProvider>
+                <MuiThemeProvider>
+                  <div>
+                    <RaisedButton
+                      onClick={this.handleClick}
+                      label={this.state.currentFormat}
+                    />
+                    <Popover
+                      open={this.state.openMenu}
+                      anchorEl={this.state.anchorEl}
+                      anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                      targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                      onRequestClose={this.handleRequestClose}
+                    >
+                      <Menu onChange={this.menuClicked.bind(this)}>
+                        <MenuItem value='audio' primaryText='Audio' />
+                        <MenuItem value='video' primaryText='Video' />
+                      </Menu>
+                    </Popover>
+                  </div>
+                </MuiThemeProvider>
               </Col>
             </Row>
             <Row>
               <Col sm={6} md={6}>
                 <MuiThemeProvider>
                   <FlatButton
-                    label="Start"
+                    label='Start'
                     onClick={this.converter.bind(this)}
                     style={styles.button}
-                    backgroundColor="white"
+                    backgroundColor='white'
                   />
-                  </MuiThemeProvider>
+                </MuiThemeProvider>
               </Col>
             </Row>
           </div>
