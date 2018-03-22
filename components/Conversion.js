@@ -8,6 +8,7 @@ import Popover from 'material-ui/Popover'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import utf8 from 'utf8'
 
 export default class Conversion extends Component {
   constructor (props) {
@@ -78,7 +79,10 @@ export default class Conversion extends Component {
       },
       responseType: 'blob' // sets response file type
     }).then((res) => {
-      const filename = this.extractFilename(res.headers['content-disposition']) // extract filename from response headers
+      let filename = this.extractFilename(res.headers['content-disposition']) // extract filename from response headers
+      console.log('before decode', filename)
+      filename = utf8.decode(filename)
+      console.log('decoded filename', filename)
       const url = window.URL.createObjectURL(new Blob([res.data])) // creates tmp URL for blob data to enable download
       const link = document.createElement('a') // generates fake link element in DOM
       link.href = url // setting href source to tmpURL variable called url
