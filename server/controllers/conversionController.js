@@ -4,6 +4,7 @@ const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path // adding fmmpeg as 
 const ffmpeg = require('fluent-ffmpeg') // ffmpeg for converting stream to mp3
 ffmpeg.setFfmpegPath(ffmpegPath) // setting ffmpegPath
 const readline = require('readline') // reading line to communicate with console for download
+const utf8 = require('utf8');
 // Initialize the conversion controller
 const conversionController = {}
 // function that cleans (removes tags like official video) title returned from ytdl
@@ -21,7 +22,7 @@ function cleaner (title) {
   for (const label of labels) {
     if (title.includes(label)) { title = title.replace(label, WS) }
   }
-  return title
+  return utf8.encode(title)
 }
 // Get request that converts on server and downloads directly on to browser
 conversionController.get = (req, res) => {
@@ -29,7 +30,9 @@ conversionController.get = (req, res) => {
   const url = req.query.url // recieve youtube url from req params
   ytdl.getInfo(url, (err, info) => {
     if (err) throw err
-    let title = info.title = cleaner(info.title) // get cleaned song title
+    let title = cleaner(info.title) // get cleaned song title
+    title = utf8.encode(title)
+    console.log('Title: ', title)
     let stream = ytdl(url, { // start video stream
       quality: 'highestaudio'
     })
