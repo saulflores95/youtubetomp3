@@ -30,9 +30,7 @@ conversionController.get = (req, res) => {
   const url = req.query.url // recieve youtube url from req params
   ytdl.getInfo(url, (err, info) => {
     if (err) throw err
-    console.log('Title Before Encode: ', info.title)
     let title = cleaner(info.title) // get cleaned song title
-    console.log('Encoded Title: ', title)
     let stream = ytdl(url, { // start video stream
       quality: 'highestaudio'
     })
@@ -68,7 +66,6 @@ conversionController.getVideo = (req, res) => {
   const url = req.query.url // recieve youtube url from req params
   ytdl.getInfo(url, (err, info) => {
     if (err) throw err
-    console.log();
     let title = info.title = cleaner(info.title) // get cleaned song title
     // set response headers
     res.set('Acces-Control-Origin', '*')
