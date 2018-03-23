@@ -32,7 +32,6 @@ conversionController.get = (req, res) => {
     if (err) throw err
     console.log('Title Before Encode: ', info.title)
     let title = cleaner(info.title) // get cleaned song title
-    title = utf8.encode(title)
     console.log('Encoded Title: ', title)
     let stream = ytdl(url, { // start video stream
       quality: 'highestaudio'
