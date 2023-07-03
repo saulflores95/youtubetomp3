@@ -1,45 +1,55 @@
 {
-  "name": "CimaP3",
+  "name": "yt2mp3",
   "version": "0.1.0",
-  "description": "A small project for converting youtube to mp3",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/saulflores95/youtubetomp3.git"
-  },
-  "author": "MrHorse",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/saulflores95/youtubetomp3/issues"
-  },
-  "homepage": "https://github.com/saulflores95/youtubetomp3#readme",
+  "private": true,
   "scripts": {
-    "dev": "node server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
-    "mon": "nodemon server.js",
-    "standard": "standard"
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start"
   },
   "dependencies": {
-    "@ffmpeg-installer/ffmpeg": "^1.0.13",
-    "axios": "^0.18.0",
-    "cors": "^2.8.4",
-    "express": "^4.14.0",
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@headlessui/react": "^1.7.15",
+    "@headlessui/tailwindcss": "^0.1.3",
+    "@heroicons/react": "^2.0.18",
+    "@t3-oss/env-nextjs": "^0.3.1",
+    "@tanstack/react-query": "^4.29.19",
+    "@trpc/client": "^10.26.0",
+    "@trpc/next": "^10.26.0",
+    "@trpc/react-query": "^10.26.0",
+    "@trpc/server": "^10.26.0",
     "fluent-ffmpeg": "^2.1.2",
-    "material-ui": "^0.20.0",
-    "next": "^5.0.0",
-    "path": "^0.12.7",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-ga": "^2.4.1",
-    "react-grid-system": "^3.1.2",
-    "react-tap-event-plugin": "^3.0.2",
-    "standard": "^11.0.0",
-    "sweetalert2": "^7.15.1",
+    "next": "^13.4.2",
+    "next-auth": "^4.22.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "readline": "^1.3.0",
+    "superjson": "1.12.2",
     "utf8": "^3.0.0",
-    "ytdl-core": "^0.20.2"
+    "ytdl-core": "^4.11.4",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
-    "nodemon": "^1.17.1"
+    "@types/eslint": "^8.37.0",
+    "@types/fluent-ffmpeg": "^2.1.21",
+    "@types/node": "^18.16.0",
+    "@types/prettier": "^2.7.2",
+    "@types/react": "^18.2.6",
+    "@types/react-dom": "^18.2.4",
+    "@types/utf8": "^3.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.40.0",
+    "eslint-config-next": "^13.4.2",
+    "postcss": "^8.4.21",
+    "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.2.8",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.0.4"
+  },
+  "ct3aMetadata": {
+    "initVersion": "7.15.0"
   }
 }
