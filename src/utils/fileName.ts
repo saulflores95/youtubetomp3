@@ -9,6 +9,8 @@ const cleaner = (title: string) => {
     "[Audio]",
     "(Official Audio)",
     "(Lyrics)",
+    "(Visualizer)",
+    "(Lyrics Video)",
   ];
   const WS = "";
   for (const label of labels) {
@@ -19,4 +21,13 @@ const cleaner = (title: string) => {
   return utf8.encode(title);
 };
 
-export default cleaner;
+const extractFilename = (filename: string) => {
+  const pattern =
+    /filename[^;=\n]*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/i;
+  const arr = pattern.exec(filename);
+  console.log(arr);
+  const name = utf8.decode(arr?.[2] ?? "");
+  return name;
+};
+
+export { cleaner, extractFilename };

@@ -1,67 +1,40 @@
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import utf8 from "utf8";
 import Modal from "~/components/modal";
+import { useGetStreamName } from "~/queries/yt-queries";
 
 const Home = () => {
   const [url, setUrl] = useState<string>("");
-
-  const [isConvertinModalOpen, setIsConvertinModalOpen] =
+  const [isConvertingModalOpen, setIsConvertingModalOpen] =
     useState<boolean>(false);
 
-  const { data, isLoading, error, refetch } = useQuery(
-    ["youtube", url],
-    async () =>
-      fetch(`/api/convert/yt-convert?url=${url}`).then((res) => {
-        const filename = extractFilename(
-          res.headers.get("content-disposition") as string
-        );
-        const blob = res.blob();
-        return { blob, filename };
-      }),
-    {
-      refetchOnWindowFocus: false,
-      enabled: false, // disable this query from automatically running
-    }
-  );
-
-  const extractFilename = (filename: string) => {
-    console.log(filename);
-    const pattern =
-      /filename[^;=\n]*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/i;
-    const arr = pattern.exec(filename);
-    console.log(arr);
-    const name = utf8.decode(arr?.[2] ?? "");
-    return name;
-  };
+  const {
+    data: fileData,
+    refetch: getFileName,
+    isLoading: isFileNameLoading,
+    error: getFileNameError,
+  } = useGetStreamName(url);
+  const fileName = fileData?.title;
 
   const handleConversion = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!url) return alert("please add a youtube url");
-    setIsConvertinModalOpen(true);
-    console.log("youtue conversion starting...");
-    await refetch();
-    const downloadUrl = window.URL.createObjectURL(new Blob([data?.blob])); // creates tmp URL for blob data to enable download
-    const link = document.createElement("a"); // generates fake link element in DOM
-    link.href = downloadUrl; // setting href source to tmpURL variable called url
-    console.log("handleConversion: ", data?.filename);
-    link.setAttribute("download", data?.filename as string); // setting url behavier when clicked
-    document.body.appendChild(link);
-    link.click(); // simulating user click
-    console.log("youtube conversion done...");
+    console.log("youtube conversion starting...");
+    await getFileName();
+    setIsConvertingModalOpen(true);
   };
 
   return (
     <div className="flex min-h-screen w-full  flex-col items-center justify-center bg-[url('/back.jpg')] bg-cover px-8 ">
       <Modal
-        open={isConvertinModalOpen}
-        setOpen={setIsConvertinModalOpen}
-        isLoading={isLoading}
+        open={isConvertingModalOpen}
+        url={url}
+        setOpen={setIsConvertingModalOpen}
+        fileName={fileName as string}
       />
       <h1 className="text-4xl font-bold text-white outline-black">
         Youtube to MP3 Converter
       </h1>
-      <div className="mt-4 flex h-4/6 w-1/2 flex-col rounded bg-white p-4 shadow-lg">
+      <div className="mt-4 flex h-4/6 w-full flex-col rounded bg-white p-4 shadow-lg md:w-1/2">
         <input
           type="text"
           name="company-website"
