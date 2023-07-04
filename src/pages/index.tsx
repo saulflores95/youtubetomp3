@@ -7,7 +7,9 @@ const Home = () => {
   const [isConvertingModalOpen, setIsConvertingModalOpen] =
     useState<boolean>(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data: fileData, refetch: getFileName } = useGetStreamName(url);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
   const fileName = fileData?.title;
 
   const handleConversion = async (e: React.MouseEvent<HTMLButtonElement>) => {
