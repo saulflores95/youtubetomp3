@@ -7,12 +7,7 @@ const Home = () => {
   const [isConvertingModalOpen, setIsConvertingModalOpen] =
     useState<boolean>(false);
 
-  const {
-    data: fileData,
-    refetch: getFileName,
-    isLoading: isFileNameLoading,
-    error: getFileNameError,
-  } = useGetStreamName(url);
+  const { data: fileData, refetch: getFileName } = useGetStreamName(url);
   const fileName = fileData?.title;
 
   const handleConversion = async (e: React.MouseEvent<HTMLButtonElement>) => {
