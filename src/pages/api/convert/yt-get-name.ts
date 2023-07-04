@@ -9,8 +9,8 @@ export const config = {
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { query, method } = req;
   if (req.method === "GET") {
+    const { query } = req;
     const url = query.url as string;
     const info = await ytdl.getInfo(url);
     const title = cleaner(info.videoDetails.title);

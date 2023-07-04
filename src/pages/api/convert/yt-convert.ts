@@ -12,9 +12,9 @@ export const config = {
   },
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { query, method } = req;
+const handler = (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
+    const { query } = req;
     ffmpeg.setFfmpegPath(ffmpegPath.path);
     const url = query.url as string;
     const fileName = query.fileName as string;

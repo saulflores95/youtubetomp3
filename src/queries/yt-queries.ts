@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { extractFilename } from "~/utils/fileName";
 
 const convertYtStream = async (url: string, fileName: string) =>
   await fetch(`/api/convert/yt-convert?url=${url}&fileName=${fileName}`).then(

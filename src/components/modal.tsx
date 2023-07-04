@@ -1,6 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { useState, Fragment } from "react";
-import { CheckIcon } from "@heroicons/react/24/outline";
 import { useStreamConversion } from "~/queries/yt-queries";
 
 interface Props {
@@ -11,11 +10,10 @@ interface Props {
 }
 
 const Modal: React.FC<Props> = ({ open, setOpen, fileName, url }) => {
-  const {
-    data,
-    isLoading,
-    refetch: startStream,
-  } = useStreamConversion(url, fileName ?? "");
+  const { data, refetch: startStream } = useStreamConversion(
+    url,
+    fileName ?? ""
+  );
 
   const [downloadingInfo, setDownloadingInfo] = useState<boolean>(false);
 
@@ -24,10 +22,10 @@ const Modal: React.FC<Props> = ({ open, setOpen, fileName, url }) => {
     setDownloadingInfo(true);
     await startStream();
     console.log(data);
-    const downloadUrl = window.URL.createObjectURL(new Blob([data])); // creates tmp URL for blob data to enable download
+    const downloadUrl = window.URL.createObjectURL(new Blob([data as Blob])); // creates tmp URL for blob data to enable download
     const link = document.createElement("a"); // generates fake link element in DOM
     link.href = downloadUrl; // setting href source to tmpURL variable called url
-    link.setAttribute("download", `${fileName}.mp3` ?? ""); // setting url behavier when clicked
+    link.setAttribute("download", `${fileName as string}.mp3` ?? ""); // setting url behavier when clicked
     document.body.appendChild(link);
     link.click(); // simulating user click
     console.log("youtube conversion done...");
