@@ -1,3 +1,4 @@
+import router from "next/router";
 import { useState } from "react";
 import Modal from "~/components/modal";
 import { useGetStreamName, useStartStream } from "~/queries/yt-queries";
@@ -29,6 +30,7 @@ const Home = () => {
     await startStream();
     setDownloadingInfo(false);
     setIsConvertingModalOpen(false);
+    setUrl("");
   };
 
   return (
@@ -61,6 +63,14 @@ const Home = () => {
           className=" mt-4  rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
         >
           Convert
+        </button>
+      </div>
+      <div className="mt-4 flex h-10 justify-center shadow-lg md:w-1/4">
+        <button
+          className="w-full rounded-md bg-white shadow-lg"
+          onClick={() => router.push("/sc")}
+        >
+          Go to SoundCloud converter
         </button>
       </div>
     </div>

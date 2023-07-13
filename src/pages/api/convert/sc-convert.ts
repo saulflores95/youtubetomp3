@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import type { NextApiRequest, NextApiResponse } from "next";
-import ytdl from "ytdl-core";
 import ffmpeg from "fluent-ffmpeg"; // ffmpeg for converting stream to mp3
 import ffmpegPath from "@ffmpeg-installer/ffmpeg";
 import readline from "readline";
