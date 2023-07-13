@@ -14,21 +14,20 @@ export const config = {
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
-    const { query } = req;
     ffmpeg.setFfmpegPath(ffmpegPath.path);
+    const { query } = req;
     const url = query.url as string;
     const fileName = query.fileName as string;
-    const stream = ytdl(url, {
-      // start video stream
-      quality: "highestaudio",
-    });
-    console.log(fileName);
     const start = Date.now(); // define when conversion starts to detect how long conversion lasts
     res.setHeader(
       "Content-Disposition",
       `attachment; filename="${fileName}.mp3"`
     ); // set file name
     res.setHeader("Content-Type", "audio/mpeg"); // set content type
+    const stream = ytdl(url, {
+      // start video stream
+      quality: "highestaudio",
+    });
     ffmpeg(stream) // set ffmpeg source to ytdl stream
       .outputOptions(["-vn", "-ar 44100", "-ac 2", "-ab 192k", "-f mp3"])
       .audioCodec("libmp3lame") // use libmp3lame to convert to mp3

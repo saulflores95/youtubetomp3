@@ -5,13 +5,17 @@ const cleaner = (title: string) => {
     "(Official Video)",
     "[Official Video]",
     "[Official Music Video]",
+    "(Official Music Video)",
     "(Music Video)",
     "[Audio]",
     "(Official Audio)",
     "(Lyrics)",
     "(Visualizer)",
     "(Lyrics Video)",
+    "(Official Lyric Video)",
+    "(Lyric Video)",
   ];
+
   const WS = "";
   for (const label of labels) {
     if (title.includes(label)) {

@@ -1,9 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 
-const convertYtStream = async (url: string, fileName: string) =>
-  await fetch(`/api/convert/yt-convert?url=${url}&fileName=${fileName}`).then(
-    (res) => res.blob()
+const convertYtStream = async (url: string, fileName: string) => {
+  const res = await fetch(
+    `/api/convert/yt-convert?url=${url}&fileName=${fileName}`
   );
+  console.log("convertYtStream:", res);
+  const blobData = await res.blob();
+  console.log("convertYtStream:", blobData);
+  return blobData;
+};
 
 const useStreamConversion = (url: string, fileName: string) =>
   useQuery(["youtube", url], async () => await convertYtStream(url, fileName), {
