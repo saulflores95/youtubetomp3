@@ -29,7 +29,6 @@ const extractFilename = (filename: string) => {
   const pattern =
     /filename[^;=\n]*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/i;
   const arr = pattern.exec(filename);
-  console.log(arr);
   const name = utf8.decode(arr?.[2] ?? "");
   return name;
 };

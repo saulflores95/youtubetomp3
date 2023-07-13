@@ -4,16 +4,21 @@ const convertYtStream = async (url: string, fileName: string) => {
   const res = await fetch(
     `/api/convert/yt-convert?url=${url}&fileName=${fileName}`
   );
-  console.log("convertYtStream:", res);
-  const blobData = await res.blob();
-  console.log("convertYtStream:", blobData);
-  return blobData;
+  return await res.blob();
 };
 
-const useStreamConversion = (url: string, fileName: string) =>
+const useStartStream = (url: string, fileName: string) =>
   useQuery(["youtube", url], async () => await convertYtStream(url, fileName), {
     refetchOnWindowFocus: false,
     enabled: false, // disable this query from automatically running
+    onSuccess: (data) => {
+      const downloadUrl = window.URL.createObjectURL(new Blob([data])); // creates tmp URL for blob data to enable download
+      const link = document.createElement("a"); // generates fake link element in DOM
+      link.href = downloadUrl; // setting href source to tmpURL variable called url
+      link.setAttribute("download", `${fileName}.mp3` ?? ""); // setting url behavier when clicked
+      document.body.appendChild(link);
+      link.click(); // simulating user click
+    },
   });
 
 const useGetStreamName = (url: string) =>
@@ -27,4 +32,4 @@ const useGetStreamName = (url: string) =>
     }
   );
 
-export { convertYtStream, useStreamConversion, useGetStreamName };
+export { convertYtStream, useStartStream, useGetStreamName };

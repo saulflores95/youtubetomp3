@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "next dev -p 3005",
     "lint": "next lint",
     "start": "next start"
   },
@@ -25,6 +25,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "readline": "^1.3.0",
+    "scdl-core": "^1.1.0",
     "superjson": "1.12.2",
     "utf8": "^3.0.0",
     "ytdl-core": "^4.11.4",

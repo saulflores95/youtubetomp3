@@ -1,41 +1,22 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { time } from "console";
-import { useState, Fragment } from "react";
-import { useStreamConversion } from "~/queries/yt-queries";
+import { Fragment } from "react";
 
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
   fileName?: string;
   url: string;
+  handleDownload?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  downloadingInfo?: boolean;
 }
 
-const Modal: React.FC<Props> = ({ open, setOpen, fileName, url }) => {
-  const { data, refetch: startStream } = useStreamConversion(
-    url,
-    fileName ?? ""
-  );
-
-  const [downloadingInfo, setDownloadingInfo] = useState<boolean>(false);
-
-  const handleDownload = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setDownloadingInfo(true);
-    await startStream();
-    setTimeout(() => {
-      console.log("handleDownload: ", data);
-      const downloadUrl = window.URL.createObjectURL(new Blob([data as Blob])); // creates tmp URL for blob data to enable download
-      const link = document.createElement("a"); // generates fake link element in DOM
-      link.href = downloadUrl; // setting href source to tmpURL variable called url
-      link.setAttribute("download", `${fileName as string}.mp3` ?? ""); // setting url behavier when clicked
-      document.body.appendChild(link);
-      link.click(); // simulating user click
-      console.log("youtube conversion done...");
-      setDownloadingInfo(false);
-      setOpen(false);
-    }, 5000);
-  };
-
+const Modal: React.FC<Props> = ({
+  open,
+  setOpen,
+  fileName,
+  handleDownload,
+  downloadingInfo = true,
+}) => {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
